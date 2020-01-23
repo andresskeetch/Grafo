@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GRAFITO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style type="text/css">
+		.nuevafila{
+			margin-left: 4px;
+		}
+		.table_row{
+			display: flex;
+		}
+		.form-control{
+			display: inline-block;
+			width: 61px;
+		}
+		.mt10{
+			margin-top: 10px;
+		}
+
+		.glyphicon-ok	{
+			color: green;
+		}
+		.glyphicon-remove{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+<div class="row">
+	<div class="modal fade" id="modalSelectRows" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <label for="rows">Cantidad de Filas y Columnas</label>
+			  <input type="number" id="rows">
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-primary" id="btnSelectRows">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<h1 style="text-align: center;">MATRIZ</h1>
+	</div>
+</div>
+<div class="row" style="margin-top:9%;">
+<div class="col-md-1"></div>
+<form name="form_matriz" id="form_matriz">
+<div  id="matriz" class="col-md-8">
+	<div id="fila1" class="table_row">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="1.1" id="1_1">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="1.2" id="1_2">	
+	</div>	
+	<div id="fila2" class="table_row">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="2.1" id="2_1">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="2.2" id="2_2">	
+	</div>
+</div>
+</form>
+<div id="botones">
+	<button class="btn btn-secondary" onclick="Limpiar()">Limpiar <span class="glyphicon glyphicon-trash"></span></button>
+	<button class="btn btn-info" onclick="Nueva()">Nueva <span class="glyphicon glyphicon-plus"></span></button>
+	<button class="btn btn-success" id="Validar">Validar <span class="glyphicon glyphicon-check"></span></button>
+	
+	<div id="table" class="mt10">
+	
+	<table class="table" >
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Relación</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>reflexiva</td>
+      <td><span id="reflexiva" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+    <tr>
+      <td>irreflexiva</td>
+      <td><span id="irreflexiva" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+    <tr>
+      <td>simétrica</td>
+      <td><span id="simetrica" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+    <tr>
+      <td>asimétrica</td>
+      <td><span id="asimetrica" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+    <tr>
+      <td>antisimétrica</td>
+      <td><span id="antisimetrica" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+    <tr>
+      <td>transitiva.</td>
+      <td><span id="transitiva" class="glyphicon glyphicon-question-sign"></span></td>
+    </tr>
+  </tbody>
+</table>
+
+	</div>
+</div>
+</div>
+
+<!-- transpuesta -->
+<div class="row" style="margin-top:9%;">
+<div class="col-md-1"></div>
+<form name="form_matriz" id="t_form_matriz">
+<h4 style="text-align: center;">transpuesta</h4>
+<div  id="t_matriz" class="col-md-8">
+	<div id="t_fila1" class="table_row">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="1.1" id="t_1_1">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="1.2" id="t_1_2">	
+	</div>	
+	<div id="t_fila2" class="table_row">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="2.1" id="t_2_1">
+	<input class="form-control" type="text" onkeyup="this.value=Numeros(this.value)" name="2.2" id="t_2_2">	
+	</div>
+</div>
+</form>
+</div>
+<script src="index.js"></script>
+</body>
+<script type="text/javascript">
+
+$( document ).ready(function() {
+   $("#table").hide();
+
+   $( "#form" ).submit(function(event) {
+   	event.preventDefault();
+   	var filas = parseInt($("#filas").val());
+   	var columnas = parseInt($("#columnas").val());
+
+   	if (filas != columnas) {
+   		$("#mensaje").text("Las Filas deben ser iguales a las Columnas");
+   	}
+   	else{
+   	var crear = filas - 2;
+	   	if (filas == 0) {
+	   		$("#id01").hide();
+	   	}
+	   	else{
+
+		   	for (var i = 0; i < crear; i++) {
+		   		agregar();
+		   		t_agregar();
+		   	}
+		   	$("#id01").hide();
+   		}
+  	}
+	});
+});
+
+</script>
+<script type="text/javascript">
+
+function Numeros(string){//Solo numeros
+    var out = '';
+    var filtro = '10';//Caracteres validos
+	
+	if (string.length >1) {
+		for (var i=0; i<1; i++) {
+			string = string.charAt(i);	
+		}
+	}
+    //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) != -1) 
+             //Se añaden a la salida los caracteres validos
+	     out += string.charAt(i);
+	
+    //Retornar valor filtrado
+    return out;
+}
+
+</script>
+<script type="text/javascript">
+	
+	var nextinput = 2;
+	function agregar() {
+		nextinput++;
+		var campofila = "";
+		
+		fila = '<div class="table_row" id="fila'+nextinput+'"></div>';
+		$("#matriz").append(fila);
+		
+		campo = '';
+		
+		for (var i = 0; i < nextinput; i++) {
+			campofila += '<input class=\"form-control\" type=\"text\" onkeyup=\"this.value=Numeros(this.value)\" name=\"'+nextinput+'.'+(i + 1)+'\" id=\"'+nextinput+'_'+(i + 1)+'\">';
+		}
+
+		for (var i = 1; i < nextinput; i++) {
+			campo = '<input  class=\"form-control\"  type=\"text\"  onkeyup=\"this.value=Numeros(this.value)\" name=\" '+i+'.'+nextinput+'\" id=\"'+i+'_'+nextinput+'\">';
+			$("#fila"+i).append(campo);
+		}
+
+
+		$("#fila"+nextinput).append(campofila);
+
+    } 
+
+// transpuesta
+
+	var t_nextinput = 2;
+	function t_agregar() {
+	t_nextinput++;
+	var t_campofila = "";
+	
+	t_fila = '<div class="table_row" id="t_fila'+t_nextinput+'"></div>';
+	$("#t_matriz").append(t_fila);
+	
+	t_campo = '';
+	
+	for (var i = 0; i < t_nextinput; i++) {
+		t_campofila += '<input class=\"form-control\" type=\"text\" onkeyup=\"this.value=Numeros(this.value)\" name=\"'+t_nextinput+'.'+(i + 1)+'\" id=\"t_'+t_nextinput+'_'+(i + 1)+'\">';
+	}
+
+	for (var i = 1; i < t_nextinput; i++) {
+		t_campo = '<input  class=\"form-control\"  type=\"text\"  onkeyup=\"this.value=Numeros(this.value)\" name=\" '+i+'.'+t_nextinput+'\" id=\"t_'+i+'_'+t_nextinput+'\">';
+		 $("#t_fila"+i).append(t_campo);
+	}
+
+
+	$("#t_fila"+t_nextinput).append(t_campofila);
+
+    }
+
+
+
+    function Limpiar() {	
+	$("input[type=text]").val('');
+		if ($("#reflexiva").hasClass("glyphicon-remove")) {
+
+    		$("#reflexiva").removeClass("glyphicon-remove").addClass( "glyphicon-question-sign" );
+
+    	}
+    	if ($("#reflexiva").hasClass("glyphicon-ok")) {
+
+    		$("#reflexiva").removeClass("glyphicon-ok").addClass( "glyphicon-question-sign" );
+
+    	}
+    }
+
+    function Nueva() {
+    location.reload();
+    }
+</script>
+<script type="text/javascript">
+	
+    $("#Validar").click(function() {
+
+    	$("#matriz input[type=text]").each(function(){
+    		if ($(this).val() == "") {
+    			$(this).val("0");
+    		}
+    	});
+
+    	// validador reflexiva
+    	var no_reflexiva = 0;
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		if (parseInt($("#"+i+"_"+i).val()) != 1 ) {
+    		   no_reflexiva = no_reflexiva+1;
+    		}	
+    	}
+    	if (no_reflexiva == 0) {
+    		if ($("#reflexiva").hasClass("glyphicon-remove")) {
+    			$("#reflexiva").removeClass("glyphicon-remove").addClass( "glyphicon-ok" );
+    		}
+    		if ($("#reflexiva").hasClass("glyphicon-question-sign")) {
+    			$("#reflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-ok" );
+    		}  		
+    	}
+    	else{
+    		if ($("#reflexiva").hasClass("glyphicon-ok")) {
+    			$("#reflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		}
+    		if ($("#reflexiva").hasClass("glyphicon-question-sign")) {
+    			$("#reflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		} 
+    	}
+    	// -------------------
+    	// validador irreflexiva
+    	var no_irreflexiva = 0;
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		if (parseInt($("#"+i+"_"+i).val()) != 0 ) {
+    		   no_irreflexiva = no_irreflexiva+1;
+    		}	
+    	}
+    	if (no_irreflexiva == 0) {
+    		if ($("#irreflexiva").hasClass("glyphicon-remove")) {
+    			$("#irreflexiva").removeClass("glyphicon-remove").addClass( "glyphicon-ok" );
+    		}
+    		if ($("#irreflexiva").hasClass("glyphicon-question-sign")) {
+    			$("#irreflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-ok" );
+    		}  		
+    	}
+    	else{
+    		if ($("#irreflexiva").hasClass("glyphicon-ok")) {
+    			$("#irreflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		}
+    		if ($("#irreflexiva").hasClass("glyphicon-question-sign")) {
+    			$("#irreflexiva").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		} 
+    	}
+    	// -------------------
+    	// validador simetrica
+    	var no_simetrica = 0;
+
+    	// <crea la transpuesta de la matriz>
+
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		for (var j = 1; j < (nextinput+1); j++) {
+    			$("#t_"+i+"_"+j).val($("#"+j+"_"+i).val());
+    		}	
+    	}
+
+    	// <valida la transpuesta de la matriz>
+
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		for (var j = 1; j < (nextinput+1); j++) {
+
+    			if ($("#t_"+i+"_"+j).val() != $("#"+i+"_"+j).val()) {
+
+    				no_simetrica = no_simetrica+1;
+    			}
+    			
+    		}	
+    	}
+
+    	if (no_simetrica == 0) {
+    		if ($("#simetrica").hasClass("glyphicon-remove")) {
+    			$("#simetrica").removeClass("glyphicon-remove").addClass( "glyphicon-ok" );
+    		}
+    		if ($("#simetrica").hasClass("glyphicon-question-sign")) {
+    			$("#simetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-ok" );
+    		}  		
+    	}
+    	else{
+    		if ($("#simetrica").hasClass("glyphicon-ok")) {
+    			$("#simetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		}
+    		if ($("#simetrica").hasClass("glyphicon-question-sign")) {
+    			$("#simetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		} 
+    	}
+    	// -------------------
+    	// asimetrica
+    	var no_asimetrica = 0;
+
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		for (var j = 1; j < (nextinput+1); j++) {
+    			if ($("#t_"+i+"_"+j).val() != 0 && $("#"+i+"_"+j).val() != 0) {
+    				if ($("#t_"+i+"_"+j).val() == $("#"+i+"_"+j).val()) {
+
+    				no_asimetrica = no_asimetrica+1;
+    				}
+    			}
+    		}	
+    	}
+
+    	if (no_asimetrica == 0) {
+    		if ($("#asimetrica").hasClass("glyphicon-remove")) {
+    			$("#asimetrica").removeClass("glyphicon-remove").addClass( "glyphicon-ok" );
+    		}
+    		if ($("#asimetrica").hasClass("glyphicon-question-sign")) {
+    			$("#asimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-ok" );
+    		}  		
+    	}
+    	else{
+    		if ($("#asimetrica").hasClass("glyphicon-ok")) {
+    			$("#asimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		}
+    		if ($("#asimetrica").hasClass("glyphicon-question-sign")) {
+    			$("#asimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		} 
+    	}
+
+    	// -------------------
+    	// antisimetrica
+    	var no_antisimetrica = 0;
+
+    	for (var i = 1; i < (nextinput+1); i++) {
+    		for (var j = 1; j < (nextinput+1); j++) {
+    			if (i != j) {
+    				if ($("#"+i+"_"+j).val() != 0) {
+
+    				no_antisimetrica = no_antisimetrica+1;
+    				}
+    			}
+    		}	
+    	}
+
+    	if (no_antisimetrica == 0) {
+    		if ($("#antisimetrica").hasClass("glyphicon-remove")) {
+    			$("#antisimetrica").removeClass("glyphicon-remove").addClass( "glyphicon-ok" );
+    		}
+    		if ($("#antisimetrica").hasClass("glyphicon-question-sign")) {
+    			$("#antisimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-ok" );
+    		}  		
+    	}
+    	else{
+    		if ($("#antisimetrica").hasClass("glyphicon-ok")) {
+    			$("#antisimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		}
+    		if ($("#antisimetrica").hasClass("glyphicon-question-sign")) {
+    			$("#antisimetrica").removeClass("glyphicon-question-sign").addClass( "glyphicon-remove" );
+    		} 
+    	}
+
+    	// -------------------
+    	$("#table").show();   	
+    });
+
+</script>
+</html>
