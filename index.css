@@ -2,3 +2,7 @@
     display: inline-block;
     width: 61px;
 }
+.grafo__container {
+    display: flex;
+    justify-content: center;
+}
